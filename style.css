@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.keyboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.keyboard_container {
+  height: auto;
+  width: 100%;
+  border: 5px solid #000;
+}
+.textarea{
+  width: 100%;
+  height: 500px;
+}
+.key_btn {
+  width: 30px;
+  height: 50px;
+  padding: 5px;
+}
+
+.spec_key {
+  width: 100px;
+  height: 50px;
+  padding: 5px;
+}
+
+.active{
+  background: green;
+  transition: 0.5s linear;
+}
+
+.rows{
+  display: flex;
+
+}
