@@ -78,10 +78,10 @@ const keyboard = new Keyboard();
 keyboard.addKeyboard();
 keyboard.addTextarea();
 
-let [arrElem, isEng, kyeContainer] = [
+let [arrElem, isEng, kyeContainer,isCaps] = [
   [],
   true,
-  document.querySelector(".keyboard_container")
+  document.querySelector(".keyboard_container"),false
 ];
 
 class Button {
@@ -103,54 +103,89 @@ class Button {
     arrElem = [];
   };
 
+TabSpace=space=>{
+  textarea.value += space;
+}
+
   keyboardTyping = () => {
     arrElem.forEach(el => {
       console.log(el.textContent);
       console.log(el.id);
       if (
         el.textContent.length === 1 &&
-        el.id != "ArrowDown" &&
-        el.id != "ArrowRight" &&
-        el.id != "ArrowLeft" &&
-        el.id != "ArrowUp"
+        el != ArrowDown &&
+        el != ArrowRight &&
+        el != ArrowLeft &&
+        el != ArrowUp
       ) {
         textarea.value += String(el.innerHTML);
       } else {
         switch (el.id) {
           case "backspace":
-            textarea.value = textarea.value.slice(0, -1);
+            textarea.value = textarea.value.slice(0, textarea.selectionStart - 1);
             break;
           case "Tab":
-            textarea.value += "  ";
+            this.TabSpace('  ');
             break;
           case "Space":
-            textarea.value += " ";
+            this.TabSpace(' ');
             break;
           case "ENTER":
             textarea.value += "\n";
             break;
-          case "DELETE":
-            textarea.value = textarea.value.slice(
-              textarea.selectionStart,
-              textarea.selectionStart + 1
-            );
-            break;
-          case "ArrowLeft":
-            textarea.selectionStart -= 1;
-            break;
-          case "ArrowRight":
-            textarea.selectionStart += 1;
-            break;
-          case "ArrowUp":
-            textarea.selectionStart += 10;
-            break;
-          case "ArrowDown":
-            textarea.selectionStart -= 10;
+          // case "DELETE":
+          //     textarea.value = textarea.value.slice(0, textarea.selectionStart);
+          //   break;
+          // case "ArrowLeft":
+          //   textarea.selectionStart -= 1;
+          //   break;
+          // case "ArrowRight":
+          //   textarea.selectionStart += 1;
+          //   break;
+          // case "ArrowUp":
+          //   textarea.selectionStart += 10;
+          //   break;
+          // case "ArrowDown":
+          //   textarea.selectionStart -= 10;
+          //   break;
+          case 'CapsLock':
+            this.capsLock();
             break;
         }
       }
     });
   };
+
+capsLock=()=>{
+switch (isCaps){
+  case false:
+    this.keys.forEach(el=>{
+      if(
+        el.textContent.length === 1 &&
+        el.id != "ArrowDown" &&
+        el.id != "ArrowRight" &&
+        el.id != "ArrowLeft" &&
+        el.id != "ArrowUp"
+      )
+      el.innerHTML = el.innerHTML.toUpperCase();
+    })
+    isCaps = true;
+    break;
+    case true:
+        this.keys.forEach(el=>{
+          if(
+            el.textContent.length === 1 &&
+            el.id != "ArrowDown" &&
+            el.id != "ArrowRight" &&
+            el.id != "ArrowLeft" &&
+            el.id != "ArrowUp"
+          )
+          el.innerHTML = el.innerHTML.toLowerCase();
+        })
+        isCaps = false;
+        break;
+}
+}
 
   LangRus = () => {
     let [shift, ctrlL] = [
